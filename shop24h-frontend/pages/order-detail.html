@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Thông tin đơn hàng</title>
+
+  <!-- Nhúng các thư viện BS4 & jQuery, awesome font -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+
+  <!-- Các file css và js tự định nghĩa thêm -->
+  <link rel="stylesheet" href="../dist/css/style.css">
+  <link rel="stylesheet" href="../dist/css/star.css">
+
+
+</head>
+
+<body>
+  <!-- 1. Header - Navbar menu -->
+  <nav class="navbar smart-scroll navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand font-weight-bold" href="../index.html">
+      <img src="../dist/img/logo/logo-64x64.ico">
+      MEN FASHION</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../pages/shop.html">Shop</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <a id="a-user-name" class="nav-link text-info mr-sm-2" href="../pages/info.html"></a>
+        <a class="nav-link text-success mr-sm-2" href="../pages/info.html"> <i class="fas fa-user"></i></a>
+        <a class="nav-link text-danger my-2 my-sm-0" href="../pages/cart.html"> <i class="fas fa-shopping-cart"></i></a>
+      </form>
+    </div>
+  </nav>
+
+  <!-- 2. Trekking -->
+  <div class="container-fluid border-bottom p-3">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="trekking">
+          <a href="../index.html">Trang chủ</a> &nbsp;
+          <i class="fas fa-caret-right"></i> &nbsp;
+          <a href="order.html">Orders</a>
+          <i class="fas fa-caret-right"></i> &nbsp;
+          <label>Details</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. content -->
+  <div class="container-fluid p-5">
+    <div class="row">
+      <!-- Category left begin -->
+      <div class="col-xs-12 col-sm-12 col-lg-3">
+        <div class="row form-group">
+          <div class="col-md-12 text-success text-center">
+            <label class="font-weight-bold h5"> Member</label>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-12">
+            <div class="list-group">
+              <a class="list-group-item list-group-item-action" href="info.html">
+                <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp; Thông tin cá nhân</a>
+              <a class="list-group-item list-group-item-action active" href="order.html">
+                <i class="fas fa-clipboard"></i>&nbsp;&nbsp;&nbsp; Danh sách đơn hàng</a>
+              <a class="list-group-item list-group-item-action" href="rate.html">
+                <i class="fas fa-comment-dots"></i>&nbsp;&nbsp;&nbsp; Đánh giá</a>
+              <a id="a-logout" class="list-group-item list-group-item-action cursor-pointer">
+                <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;&nbsp; Thoát</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Category left end -->
+
+      <!-- info order begin -->
+      <div class="col-xs-12 col-sm-12 col-lg-9">
+        <div class="row form-group">
+          <div class="col-md-12 text-center">
+            <h2>THÔNG TIN ĐƠN HÀNG CỦA BẠN</h2>
+            <label>Dưới đây là thông tin đơn hàng</label>
+            <label id="lbl-order-code" class="font-weight-bold"></label> -
+            <label id="lbl-order-date"></label>
+            <h4 id="h4-status-name" class="font-weight-bold text-success"></h4>
+          </div>
+        </div>
+        <hr>
+
+        <div class="row form-group">
+          <div id="div-list-product" class="col-md-12">
+            <!-- load database -->
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-12">
+            <table class="table bg-light">
+              <tbody class="font-italic">
+                <tr>
+                  <td>Mã giảm giá</td>
+                  <td id="td-voucher-code" class="text-right"></td>
+                </tr>
+                <tr>
+                  <td>Tổng giá trị sản phẩm</td>
+                  <td id="td-total-value-product" class="text-right"></td>
+                </tr>
+                <tr>
+                  <td>Giá khuyến mãi</td>
+                  <td id="td-price-discount" class="text-right"></td>
+                </tr>
+                <tr>
+                  <td>Phí giao hàng</td>
+                  <td id="td-price-shipped" class="text-right"></td>
+                </tr>
+                <tr class="font-weight-bold">
+                  <td>Tổng thanh toán</td>
+                  <td id="td-total-amount" class="text-right"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-12 text-center">
+            <h4 class="font-weight-bold text-primary">Thông tin nhận hàng</h4>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label>Tên người nhận:</label>
+          </div>
+          <div class="col-md-9 font-weight-bold">
+            <label id="lbl-full-name-info"></label>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label>Email:</label>
+          </div>
+          <div class="col-md-9 font-weight-bold">
+            <label id="lbl-email"></label>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label>Số điện thoại:</label>
+          </div>
+          <div class="col-md-9 font-weight-bold">
+            <label id="lbl-phone"></label>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label>Địa chỉ giao hàng:</label>
+          </div>
+          <div class="col-md-9 font-weight-bold">
+            <label id="lbl-address"></label>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label>Ghi chú:</label>
+          </div>
+          <div class="col-md-9 font-weight-bold">
+            <label id="lbl-note"></label>
+          </div>
+        </div>
+
+      </div>
+      <!--/ info order end -->
+
+    </div>
+
+    <!-- modal rate begin -->
+    <div class="modal fade" id="modal-rate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title w-100 text-center" id="modal-rate-lable">Mời bạn đánh giá cho sản phẩm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <label>Đánh giá của bạn về sản phẩm</label>
+                <textarea id="txt-comment" class="form-control" placeholder="Nhập đánh giá của bạn"></textarea>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-12 text-center">
+                <h1 id="h1-rating"></h1>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-12 text-center">
+                <fieldset class="rating ">
+                  <input type="radio" id="star5" name="rating" value="5" />
+                  <label class="full" for="star5" title="Awesome - 5 stars"></label>
+                  <input type="radio" id="star4half" name="rating" value="4.5" />
+                  <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                  <input type="radio" id="star4" name="rating" value="4" />
+                  <label class="full" for="star4" title="Pretty good - 4 stars"></label>
+                  <input type="radio" id="star3half" name="rating" value="3.5" />
+                  <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                  <input type="radio" id="star3" name="rating" value="3" />
+                  <label class="full" for="star3" title="Meh - 3 stars"></label>
+                  <input type="radio" id="star2half" name="rating" value="2.5" />
+                  <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                  <input type="radio" id="star2" name="rating" value="2" />
+                  <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                  <input type="radio" id="star1half" name="rating" value="1.5" />
+                  <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                  <input type="radio" id="star1" name="rating" value="1" />
+                  <label class="full" for="star1" title="Sucks big time - 1 star"></label>
+                  <input type="radio" id="starhalf" name="rating" value="0.5" />
+                  <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                  <input type="radio" class="reset-option" name="rating" value="reset" />
+                </fieldset>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btn-send-rate" type="button" class="btn btn-block btn-outline-warning">Gửi đánh giá
+              &nbsp; <i class="fas fa-long-arrow-alt-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal rate end -->
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="page-footer font-small mdb-color pt-4 bg-dark text-light">
+
+    <!-- Footer Links -->
+    <div class="container link-footer text-center text-md-left">
+
+      <!-- Footer links -->
+      <div class="row text-center text-md-left mt-3 pb-3">
+
+        <!-- Grid column -->
+        <div class="col-sm-3 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">MEN FASHION</h6>
+          <p>Nơi chia sẻ phong cách làm đẹp của quý ông</p>
+        </div>
+        <!-- Grid column -->
+
+        <hr class="w-100 clearfix d-md-none">
+
+        <!-- Grid column -->
+        <div class="col-sm-2 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">TRUY CẬP NHANH</h6>
+          <p>
+            <a href="#!">Câu chuyện về MenFashion</a>
+          </p>
+          <p>
+            <a href="#!">Khuyến mãi</a>
+          </p>
+          <p>
+            <a href="#!">Giao hàng</a>
+          </p>
+          <p>
+            <a href="#!">Điều khoản sử dụng</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <hr class="w-100 clearfix d-md-none">
+
+        <!-- Grid column -->
+        <div class="col-sm-3 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">CHÍNH SÁCH</h6>
+          <p>
+            <a href="#!">Liên hệ</a>
+          </p>
+          <p>
+            <a href="#!">Hỏi đáp</a>
+          </p>
+          <p>
+            <a href="#!">Info</a>
+          </p>
+          <p>
+            <a href="#!">Đơn hàng của bạn</a>
+          </p>
+        </div>
+
+        <!-- Grid column -->
+        <hr class="w-100 clearfix d-md-none">
+
+        <!-- Grid column -->
+        <div class="col-sm-4 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+          <p>
+            <i class="fas fa-home mr-3"></i> Biên Hòa, Đồng Nai
+          </p>
+          <p>
+            <i class="fas fa-envelope mr-3"></i> ntvu171091@gmail.com
+          </p>
+          <p>
+            <i class="fas fa-phone mr-3"></i> + 84 398 317 175
+          </p>
+          <p>
+            <i class="fas fa-print mr-3"></i> + 84 398 317 175
+          </p>
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Footer links -->
+
+      <hr>
+
+      <!-- Grid row -->
+      <div class="row d-flex align-items-center">
+
+        <!-- Grid column -->
+        <div class="col-sm-7 col-lg-8">
+          <!--Copyright-->
+          <p class="text-center text-md-left">
+            Copyright ©2021 All rights reserved | This template is made with by Nguyen Tuan Vu
+          </p>
+
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-sm-5 col-lg-4 ml-lg-0">
+
+          <!-- Social buttons -->
+          <div class="text-center text-md-right">
+            <ul class="list-unstyled list-inline">
+              <li class="list-inline-item">
+                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                  <i class="fab fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                  <i class="fab fa-google-plus-g"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+  </footer>
+  <!-- Footer -->
+
+
+  <!-- InputMask -->
+  <script src="../plugins/moment/moment.min.js"></script>
+  <script src="../plugins/inputmask/jquery.inputmask.min.js"></script>
+  <!-- Select2 -->
+  <script src="../plugins/select2/js/select2.full.min.js"></script>
+  <!-- Toastr -->
+  <script src="../plugins/toastr/toastr.min.js"></script>
+  <!-- Script dùng chung cho tất cả page -->
+  <script src="../dist/js/general.js"></script>
+  <!-- Script chính của page hiện tại -->
+  <script src="../dist/js/pages/order-detail.js"></script>
+
+</body>
+
+</html>
